@@ -1,3 +1,4 @@
+
 package com.e2ehaven
 
 import io.appium.java_client.AppiumDriver
@@ -100,10 +101,13 @@ open class BasePage(protected val driver: AppiumDriver) {
         } else {
             // iOS implementation
             val elementId = driver.findElement(By.className("XCUIElementTypeScrollView")).id
-            driver.executeScript(
-                "mobile: scroll", 
-                mapOf("element" to elementId, "predicateString" to "name CONTAINS '$text'")
+            
+            // Use correct format for executeScript with a single map argument
+            val scrollObject = mapOf(
+                "element" to elementId,
+                "predicateString" to "name CONTAINS '$text'"
             )
+            driver.executeScript("mobile: scroll", scrollObject)
         }
     }
     
