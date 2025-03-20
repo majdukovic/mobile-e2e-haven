@@ -92,8 +92,11 @@ open class BasePage(protected val driver: AppiumDriver) {
      * Scrolls down until an element with the given text is found
      */
     protected fun scrollToText(text: String) {
-        val scrollableScript = if (driver.platformName.equals("android", ignoreCase = true)) {
-            "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().textContains(\"$text\"))"
+        val isAndroid = driver.capabilities.platformName.toString().equals("android", ignoreCase = true)
+        
+        if (isAndroid) {
+            val scrollableScript = "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().textContains(\"$text\"))"
+            driver.findElement(By.androidUIAutomator(scrollableScript))
         } else {
             // iOS implementation
             val elementId = driver.findElement(By.className("XCUIElementTypeScrollView")).id
@@ -101,11 +104,6 @@ open class BasePage(protected val driver: AppiumDriver) {
                 "mobile: scroll", 
                 mapOf("element" to elementId, "predicateString" to "name CONTAINS '$text'")
             )
-            return
-        }
-        
-        if (driver.platformName.equals("android", ignoreCase = true)) {
-            driver.findElement(By.androidUIAutomator(scrollableScript))
         }
     }
     
