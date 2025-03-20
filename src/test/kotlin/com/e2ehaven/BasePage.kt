@@ -1,7 +1,7 @@
-
 package com.e2ehaven
 
 import io.appium.java_client.AppiumDriver
+import io.appium.java_client.AppiumBy
 import io.appium.java_client.pagefactory.AppiumFieldDecorator
 import org.openqa.selenium.By
 import org.openqa.selenium.NoSuchElementException
@@ -96,7 +96,7 @@ open class BasePage(protected val driver: AppiumDriver) {
         
         if (isAndroid) {
             val scrollableScript = "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().textContains(\"$text\"))"
-            driver.findElement(By.androidUIAutomator(scrollableScript))
+            driver.findElement(AppiumBy.androidUIAutomator(scrollableScript))
         } else {
             // iOS implementation
             val elementId = driver.findElement(By.className("XCUIElementTypeScrollView")).id
