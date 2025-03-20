@@ -1,69 +1,115 @@
-# Welcome to your Lovable project
 
-## Project info
+# Mobile App Test Automation Framework
 
-**URL**: https://lovable.dev/projects/99a863cd-aaa3-4c0b-90ea-a844e4d9cf25
+A comprehensive Appium-based test automation framework for testing mobile applications on both iOS and Android platforms. This framework is written in Kotlin and follows the Page Object Model design pattern.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- **Cross-Platform Testing**: Test both iOS and Android applications using a single codebase
+- **Page Object Model**: Clean separation of test code from page-specific code
+- **Robust Base Classes**: Common functionality abstracted in base classes
+- **Flexible Configuration**: Easy to configure for different environments and test suites
+- **Detailed Reporting**: Comprehensive test reports with screenshots for failures
+- **Parallel Execution**: Support for parallel test execution
 
-**Use Lovable**
+## Project Structure
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/99a863cd-aaa3-4c0b-90ea-a844e4d9cf25) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+src/
+├── test/
+│   ├── kotlin/
+│   │   └── com/
+│   │       └── e2ehaven/
+│   │           ├── BaseTest.kt              # Base test class with common setup/teardown
+│   │           ├── BasePage.kt              # Base page object with common interactions
+│   │           ├── pageobjects/             # Page object classes
+│   │           │   ├── LoginPage.kt
+│   │           │   ├── DashboardPage.kt
+│   │           │   ├── SettingsPage.kt
+│   │           │   ├── NotificationsPage.kt
+│   │           │   └── LanguagePage.kt
+│   │           ├── tests/                   # Test classes
+│   │           │   ├── LoginTests.kt
+│   │           │   ├── SettingsTests.kt
+│   │           │   └── NotificationsTests.kt
+│   │           └── utils/                   # Utility classes
+│   │               ├── TestListener.kt      # TestNG listeners for reporting
+│   │               └── WaitUtils.kt         # Wait utility functions
+│   └── resources/
+│       ├── testng.xml                       # TestNG configuration
+│       └── logback.xml                      # Logging configuration
+└── main/
+    └── kotlin/
+        └── com/
+            └── e2ehaven/
+                └── Main.kt                  # Main application entry point (if needed)
 ```
 
-**Edit a file directly in GitHub**
+## Prerequisites
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- JDK 11 or higher
+- Appium 2.0 or higher
+- Android SDK (for Android testing)
+- Xcode (for iOS testing)
+- Real devices or emulators/simulators
+- Kotlin Multiplatform app to test
 
-**Use GitHub Codespaces**
+## Getting Started
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+1. Clone this repository
+2. Install the required dependencies:
+   ```
+   ./gradlew build
+   ```
+3. Configure the test properties in `src/test/resources/config.properties` (create if not exists)
+4. Start the Appium server (or let the framework handle it)
+5. Run the tests:
+   ```
+   ./gradlew test
+   ```
 
-## What technologies are used for this project?
+## Running Specific Tests
 
-This project is built with .
+To run a specific test suite:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```
+./gradlew test -Dsuite=android
+```
 
-## How can I deploy this project?
+To run a specific test class:
 
-Simply open [Lovable](https://lovable.dev/projects/99a863cd-aaa3-4c0b-90ea-a844e4d9cf25) and click on Share -> Publish.
+```
+./gradlew test -Dtest.single=LoginTests
+```
 
-## I want to use a custom domain - is that possible?
+## Configuration
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+The framework can be configured using environment variables or a properties file:
+
+- `APPIUM_JS_PATH`: Path to Appium executable
+- `DEVICE_NAME`: Target device name
+- `PLATFORM_NAME`: Target platform (android/ios)
+- `APP_PATH`: Path to the application (.apk or .ipa)
+
+## Adding New Tests
+
+1. Create a new Page Object class in the `pageobjects` directory
+2. Implement the necessary page interactions and verifications
+3. Create a new Test class in the `tests` directory
+4. Use the Page Object classes in your test methods
+
+## Best Practices
+
+- Keep page objects focused on a single page or component
+- Use meaningful names for page objects and test methods
+- Make tests independent and self-contained
+- Use test data providers for data-driven testing
+- Add descriptive comments and follow Kotlin coding conventions
+
+## Reporting
+
+Test reports are generated in the `build/reports/tests` directory after test execution.
+
+## Logging
+
+Logs are saved to the `logs` directory. Configuration can be modified in `src/test/resources/logback.xml`.

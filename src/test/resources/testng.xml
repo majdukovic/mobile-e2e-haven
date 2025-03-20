@@ -1,0 +1,25 @@
+
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Mobile App Test Suite" verbose="1" parallel="tests" thread-count="1">
+    <listeners>
+        <listener class-name="com.e2ehaven.utils.TestListener"/>
+    </listeners>
+    
+    <test name="Android Tests">
+        <parameter name="platform" value="android"/>
+        <classes>
+            <class name="com.e2ehaven.tests.LoginTests"/>
+            <class name="com.e2ehaven.tests.SettingsTests"/>
+            <class name="com.e2ehaven.tests.NotificationsTests"/>
+        </classes>
+    </test>
+    
+    <test name="iOS Tests">
+        <parameter name="platform" value="ios"/>
+        <classes>
+            <class name="com.e2ehaven.tests.LoginTests"/>
+            <class name="com.e2ehaven.tests.SettingsTests"/>
+            <class name="com.e2ehaven.tests.NotificationsTests"/>
+        </classes>
+    </test>
+</suite>
