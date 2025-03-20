@@ -100,7 +100,8 @@ open class BasePage(protected val driver: AppiumDriver) {
             driver.findElement(AppiumBy.androidUIAutomator(scrollableScript))
         } else {
             // iOS implementation
-            val elementId = driver.findElement(By.className("XCUIElementTypeScrollView")).id
+            val element = driver.findElement(By.className("XCUIElementTypeScrollView"))
+            val elementId = element.getAttribute("id") // Use getAttribute instead of direct .id property
             
             // Use correct format for executeScript with a single map argument
             val scrollObject = mapOf(
